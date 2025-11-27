@@ -1,0 +1,18 @@
+<div class="flex justify-between items-center mb-3 px-1 group-header" id="col-header-{{ column.id }}">
+    <h3 class="font-bold text-gray-700 text-sm uppercase tracking-wide cursor-pointer hover:bg-gray-200 px-1 rounded transition"
+        hx-get="/columns/{{ column.id }}/edit"
+        hx-trigger="click"
+        hx-target="#col-header-{{ column.id }}"
+        hx-swap="outerHTML">
+        {{ column.name }}
+        <span class="ml-2 bg-gray-200 text-gray-500 py-0.5 px-2 rounded-full text-xs">{{ column.tasks|length }}</span>
+    </h3>
+
+    <button hx-delete="/columns/{{ column.id }}"
+            hx-confirm="Удалить колонку и все задачи?"
+            hx-target="#col-{{ column.id }}"
+            hx-swap="outerHTML"
+            class="text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition">
+        ×
+    </button>
+</div>

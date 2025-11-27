@@ -1,0 +1,62 @@
+<div class="h-full flex flex-col bg-blue-50/30">
+    <!-- Панель инструментов -->
+    <div class="px-6 py-4 flex items-center justify-between border-b bg-white/50 backdrop-blur-sm">
+        <div class="flex items-center gap-4">
+            <a href="/" class="text-gray-400 hover:text-gray-800 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            </a>
+            {% include "partials/project_title.html" %}
+        </div>
+
+        <div class="flex gap-4">
+            <!-- AI ГЕНЕРАТОР -->
+            <form hx-post="/projects/{{ project.id }}/ai_generate"
+                  hx-target="#ai-column-placeholder"
+                  hx-swap="outerHTML"
+                  hx-indicator="#ai-spinner"
+                  class="flex gap-2 items-center bg-purple-100 p-1 rounded-lg border border-purple-200">
+
+                <!-- Выбор режима AI -->
+                <select name="mode" class="bg-purple-50 text-xs text-purple-900 border border-purple-200 rounded px-2 py-1.5 focus:outline-none cursor-pointer hover:bg-white transition">
+                    <option value="ideas">💡 Идеи</option>
+                    <option value="breakdown">🔨 Разбить задачу</option>
+                </select>
+
+                <input type="text" name="prompt" placeholder="Опиши задачу..." class="bg-transparent text-sm px-2 focus:outline-none w-64 text-purple-900 placeholder-purple-400">
+
+                <button class="bg-purple-600 text-white p-1.5 rounded hover:bg-purple-700 transition relative">
+                    ✨
+                    <div id="ai-spinner" class="htmx-indicator absolute inset-0 bg-purple-700 rounded flex items-center justify-center">
+                       <svg class="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
+                    </div>
+                </button>
+            </form>
+
+            <!-- Добавить колонку -->
+            <form hx-post="/projects/{{ project.id }}/columns"
+                  hx-target="#columns-container"
+                  hx-swap="beforeend"
+                  hx-on::after-request="this.reset()"
+                  class="flex shadow-sm">
+                <input type="text" name="name" placeholder="Новый этап..." required
+                       class="p-2 text-sm border border-r-0 rounded-l focus:outline-none w-32">
+                <button class="bg-white border border-l-0 rounded-r px-3 hover:bg-gray-50 text-gray-500 font-bold">+</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Контейнер колонок -->
+    <div class="flex-1 overflow-x-auto p-6">
+        <div class="flex h-full space-x-6 items-start" id="columns-container">
+            {% for column in project.columns %}
+                {% if "AI" in column.name %}
+                    <div id="ai-column-placeholder" style="display: contents;">
+                        {% include "partials/column.html" %}
+                    </div>
+                {% else %}
+                    {% include "partials/column.html" %}
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>

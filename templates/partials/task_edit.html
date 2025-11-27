@@ -1,0 +1,20 @@
+<form hx-patch="/tasks/{{ task.id }}"
+      hx-target="this"
+      hx-swap="outerHTML"
+      hx-trigger="focusout"
+      class="bg-white p-2 rounded-lg shadow-md border-2 border-blue-400 z-10 relative">
+
+    <!--
+      Убрали hx-trigger="blur" отсюда.
+      Теперь форма сама слушает потерю фокуса внутри себя.
+    -->
+    <textarea name="content"
+           class="w-full text-sm outline-none bg-transparent resize-none font-sans overflow-hidden"
+           oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"
+           autofocus
+           onfocus="this.select(); this.style.height = ''; this.style.height = this.scrollHeight + 'px'">{{ task.content }}</textarea>
+
+    <div class="text-[10px] text-gray-400 mt-1 text-right italic select-none">
+        Кликни вне поля для сохранения
+    </div>
+</form>

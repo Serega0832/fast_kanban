@@ -1,0 +1,11 @@
+<form hx-patch="/columns/{{ column.id }}"
+      hx-target="this"
+      hx-swap="outerHTML"
+      hx-trigger="focusout"
+      class="mb-3 px-1">
+
+    <input type="text" name="name" value="{{ column.name }}"
+           class="w-full font-bold text-sm uppercase tracking-wide p-1 rounded border border-blue-400 outline-none shadow-sm"
+           autofocus
+           onfocus="this.select()">
+</form>

@@ -1,0 +1,36 @@
+<div class="bg-gray-100/80 p-2 rounded-xl w-72 flex-shrink-0 flex flex-col max-h-full border border-gray-200 shadow-sm group transition-all duration-300 relative {% if column.name == 'Архив' %}column-collapsed{% endif %}"
+     id="col-{{ column.id }}">
+
+    <div onclick="toggleColumn('col-{{ column.id }}')"
+         class="absolute inset-0 z-0 cursor-pointer"
+         title="Кликните, чтобы развернуть/свернуть"></div>
+
+    <div class="vertical-title hidden pointer-events-none z-10 mx-auto mt-4 text-xs font-bold text-gray-500 tracking-widest uppercase" style="writing-mode: vertical-rl;">
+        {{ column.name }}
+    </div>
+
+    <div class="column-content h-full flex flex-col z-10 relative pointer-events-auto">
+
+        <div class="flex justify-between items-center mb-2 px-1">
+            {% include "partials/column_header.html" %}
+            <button onclick="toggleColumn('col-{{ column.id }}')" class="text-gray-300 hover:text-gray-500 text-xs p-1">
+                ◀
+            </button>
+        </div>
+
+        <div id="col-{{ column.id }}-tasks" class="flex-1 overflow-y-auto min-h-[20px] pr-1 custom-scrollbar pb-2">
+            {% for task in column.tasks %}
+                {% include "partials/task.html" %}
+            {% endfor %}
+        </div>
+
+        <form hx-post="/columns/{{ column.id }}/tasks"
+              hx-target="#col-{{ column.id }}-tasks"
+              hx-swap="beforeend"
+              hx-on::after-request="this.reset()"
+              class="mt-1">
+            <input type="text" name="content" placeholder="+ Карточка" required
+                   class="w-full py-1.5 px-3 text-sm rounded-lg shadow-sm border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400 placeholder-gray-400 bg-white">
+        </form>
+    </div>
+</div>

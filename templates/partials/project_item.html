@@ -1,0 +1,20 @@
+<div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-lg hover:border-indigo-200 transition-all cursor-pointer group flex flex-col justify-between h-40"
+     hx-get="/projects/{{ project.id }}"
+     hx-target="#main-content"
+     hx-push-url="true">
+    <div>
+        <h2 class="text-xl font-bold text-gray-800 group-hover:text-indigo-600 transition">{{ project.name }}</h2>
+        <p class="text-xs text-gray-400 mt-1">Создан: {{ project.created_at.strftime('%d.%m.%Y') }}</p>
+    </div>
+
+    <div class="flex items-center justify-between mt-4">
+        <div class="flex -space-x-2">
+            <!-- Фейковые аватарки участников -->
+            <div class="w-6 h-6 rounded-full bg-red-400 border-2 border-white"></div>
+            <div class="w-6 h-6 rounded-full bg-blue-400 border-2 border-white"></div>
+        </div>
+        <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-md font-medium">
+            {{ project.columns|length }} этапов
+        </span>
+    </div>
+</div>

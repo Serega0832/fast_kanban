@@ -1,0 +1,16 @@
+<div class="bg-gray-200 p-4 rounded-lg w-80 flex-shrink-0 mr-4">
+    <h3 class="font-bold text-lg mb-3">{{ board.name }}</h3>
+
+    <!-- Список задач -->
+    <div id="board-{{ board.id }}-tasks" class="space-y-2 mb-4">
+        {% for task in board.tasks %}
+            {% include "partials/task.html" %}
+        {% endfor %}
+    </div>
+
+    <!-- Форма добавления задачи -->
+    <form hx-post="/boards/{{ board.id }}/tasks" hx-target="#board-{{ board.id }}-tasks" hx-swap="beforeend">
+        <input type="text" name="content" placeholder="Новая задача..." required
+               class="w-full p-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400">
+    </form>
+</div>

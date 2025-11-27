@@ -1,0 +1,11 @@
+<form hx-patch="/projects/{{ project.id }}"
+      hx-target="this"
+      hx-swap="outerHTML"
+      hx-trigger="focusout"
+      class="flex items-center">
+
+    <input type="text" name="name" value="{{ project.name }}"
+           class="text-2xl font-bold text-gray-800 bg-white px-2 py-1 rounded border border-blue-500 outline-none w-auto min-w-[200px]"
+           autofocus
+           onfocus="this.select()">
+</form>

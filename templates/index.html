@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="p-8 h-full overflow-y-auto">
+    <h1 class="text-3xl font-bold mb-2 text-gray-800">Ваши проекты</h1>
+    <p class="text-gray-500 mb-8">Выберите доску или создайте новую</p>
+
+    <!-- Список проектов -->
+    <div id="projects-list" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
+        {% for project in projects %}
+            {% include "partials/project_item.html" %}
+        {% endfor %}
+
+        <!-- Кнопка создания -->
+        <div class="bg-gray-100 border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col justify-center items-center text-center hover:border-indigo-400 hover:bg-indigo-50 transition group">
+            <h3 class="font-semibold text-gray-600 group-hover:text-indigo-600 mb-4">Создать новый проект</h3>
+            <form hx-post="/projects/new"
+                  hx-target="#projects-list"
+                  hx-swap="afterbegin"
+                  hx-on::after-request="this.reset()"
+                  class="w-full">
+                <input type="text" name="name" placeholder="Название..." required
+                       class="w-full p-2 mb-2 text-sm border rounded focus:outline-none focus:ring-2 focus:ring-indigo-300 bg-white">
+                <button class="bg-indigo-600 text-white text-sm px-4 py-2 rounded hover:bg-indigo-700 w-full font-medium shadow-sm">
+                    + Создать
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
