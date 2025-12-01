@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-xl shadow-md w-96">
+        <h2 class="text-2xl font-bold mb-4 text-center text-gray-800">Регистрация</h2>
+        {% if error %}
+        <div class="bg-red-100 text-red-700 p-2 rounded mb-4 text-sm">{{ error }}</div>
+        {% endif %}
+        <form action="/register" method="post" class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Придумайте логин</label>
+                <input type="text" name="username" required class="w-full p-2 border rounded outline-none">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Придумайте пароль</label>
+                <input type="password" name="password" required class="w-full p-2 border rounded outline-none">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Ваш Telegram ID</label>
+                <input type="text" name="telegram_id" required placeholder="Например: 123456789" class="w-full p-2 border rounded outline-none bg-yellow-50">
+                <p class="text-xs text-gray-500 mt-1">Нужен, чтобы бот видел ваши доски. Узнать свой ID: <a href="https://t.me/userinfobot" target="_blank" class="text-blue-500 underline">@userinfobot</a></p>
+            </div>
+            <button type="submit" class="w-full bg-indigo-600 text-white p-2 rounded hover:bg-indigo-700">Создать аккаунт</button>
+        </form>
+        <p class="mt-4 text-center text-sm">Уже есть? <a href="/login" class="text-indigo-600 hover:underline">Войти</a></p>
+    </div>
+</body>
+</html>
